@@ -17,6 +17,30 @@ exports.getAllDestinations = async (req, res) => {
     }
 };
 
+// Get single destination by ID
+exports.getDestinationById = async (req, res) => {
+    try {
+        const destination = await Destination.findById(req.params.id);
+        
+        if (!destination) {
+            return res.status(404).json({
+                success: false,
+                error: 'Destination not found'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            data: destination
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: 'Server Error'
+        });
+    }
+};
+
 // Create new destination
 exports.createDestination = async (req, res) => {
     try {
